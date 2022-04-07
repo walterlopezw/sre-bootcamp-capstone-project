@@ -1,0 +1,13 @@
+body{
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    background-color: transparent;
+}
+img{
+    background-color: transparent;
+    height:100%;
+}
+h1 b {
+    color:blue;
+}
