@@ -10,11 +10,21 @@
 <body>
     <h1>Hello <b>BB-Hommer</b></h1>
     <img src="{{ url_for('static', filename= 'images/image.gif') }}" alt="">
+    
+    <form action="http://localhost:8000/login" method="post">
+        <input type="text" name="username" id="username">
+        <input type="password" value="" name="password" id="password">
+        <button type="submit">Login</button>
+    </form>
+    
+    
     <ul>
-        <li>http://127.0.0.1:8000/_health</li>
-        <li>http://127.0.0.1:8000/cidr-to-mask?value=8</li>
-        <li>http://127.0.0.1:8000/cidr-to-mask?value=8</li>
-        <li>http://127.0.0.1:8000/mask-to-cidr?value=255.0.0.0</li>
+        <li> <a href="http://127.0.0.1:8000/_health">_health</a></li>
+        {% if data %}
+        <li><a href="http://127.0.0.1:8000/cidr-to-mask?value=8"></a>cidr-to-mask</a></li>
+        <li><a href="http://127.0.0.1:8000/mask-to-cidr?value=255.0.0"></a>httmask-to-cidr</a></li>
+        <li><a href="http://localhost:8000/ip4-validation?value=127.0.0.1222"></a>ip4-validation</a></li>
+        {% endif %}
       </ul>
 </body>
 </html>

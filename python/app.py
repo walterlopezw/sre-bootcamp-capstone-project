@@ -21,7 +21,9 @@ validate = IpValidate()
 @app.route("/")
 def urlRoot():
     #return "OK"
-    return render_template('index.html')
+    var1 = request.headers.get('Authorization')
+    is_logged = protected.access_Data(var1)
+    return render_template('index.html', data=is_logged)
 
 # Just a health check
 # e.g. http://127.0.0.1:8000/_health
@@ -40,7 +42,7 @@ def urlLogin():
     # You can test with username = admin, password = secret
     # This DB has already a best practice: a salt value to store the passwords
     con = mysql.connector.connect(
-        host='localhost',
+        host='10.38.70.171',
         user='mentor_walii',
         password='mentor_walii',
         database='mentor_walii'
@@ -55,6 +57,9 @@ def urlLogin():
     if var3 is not False:
         r = {"data": var3}
         return jsonify(r)
+    # var1 = request.headers.get('Authorization')
+    # if not protected.access_Data(var1):
+    #     abort(401)
     abort(401)
 
 
@@ -83,6 +88,16 @@ def urlMaskToCidr():
     val = request.args.get('value')
     r = {"function": "maskToCidr", "input": val,
          "output": convert.mask_to_cidr(val), }
+    return jsonify(r)
+
+@app.route("/ip4-validation")
+def url_ip4_validation():
+    var1 = request.headers.get('Authorization')
+    if not protected.access_Data(var1):
+        abort(401)
+    val = request.args.get('value')
+    r = {"function": "ip4Validation", "input": val,
+         "output": validate.ipv4_validation(val), }
     return jsonify(r)
 
 

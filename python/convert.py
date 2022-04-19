@@ -1,7 +1,7 @@
 import re
 import socket
 import struct
-
+from netaddr import *
 
 class CidrMaskConvert:
     def cidr_to_mask(self, val):
@@ -40,7 +40,14 @@ class CidrMaskConvert:
 class IpValidate:
     def ipv4_validation(self, val):
         if re.match(r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$",val):
-            return True
+            
+            if IPAddress(val).is_private():
+                return "Private"
+            
+            if IPAddress(val).is_loopback():
+                return "Loopback"
+            
+            return "Public"
         else:
             return False
         # try:
